@@ -2,12 +2,11 @@ package handlers
 
 import (
 	"errors"
-	"fmt"
 	"go-api-demo/internal/application/port/in"
 	"go-api-demo/internal/constant"
 	"go-api-demo/internal/domain"
+	"go-api-demo/internal/http/util"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -38,7 +37,7 @@ func NewBookHandler(bookService in.BookUseCase) *BookHandler {
 func (h *BookHandler) CreateBook(c *gin.Context) {
 	var json CreateBookReq
 	if err := c.ShouldBindJSON(&json); err != nil {
-		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, err))
+		util.NewError(c, http.StatusBadRequest, constant.ErrValidationCode, err)
 		return
 	}
 
@@ -57,19 +56,19 @@ func (h *BookHandler) CreateBook(c *gin.Context) {
 }
 
 func (h *BookHandler) GetBook(c *gin.Context) {
-	ID, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, "ID should be a number"))
+	type params struct {
+		ID int `uri:"id" binding:"required"`
+	}
+	var p params
+	if err := c.ShouldBindUri(&p); err != nil {
+		util.NewError(c, http.StatusBadRequest, constant.ErrValidationCode, err)
 		return
 	}
 
-	book, err := h.bookService.GetBook(ID)
+	book, err := h.bookService.GetBook(p.ID)
 	if err != nil {
 		if errors.Is(err, domain.ErrBookNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{
-				"code":    constant.ErrNotFoundCode,
-				"message": "Book not found",
-			})
+			util.NewError(c, http.StatusNotFound, constant.ErrNotFoundCode, domain.ErrBookNotFound)
 			return
 		}
 		c.Error(err)
@@ -91,7 +90,7 @@ func (h *BookHandler) GetBook(c *gin.Context) {
 func (h *BookHandler) GetBooks(c *gin.Context) {
 	var query GetBooksReq
 	if err := c.ShouldBindQuery(&query); err != nil {
-		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, err))
+		util.NewError(c, http.StatusBadRequest, constant.ErrValidationCode, err)
 		return
 	}
 
@@ -105,29 +104,29 @@ func (h *BookHandler) GetBooks(c *gin.Context) {
 }
 
 func (h *BookHandler) UpdateBook(c *gin.Context) {
-	ID, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, "ID should be a number"))
+	type params struct {
+		ID int `uri:"id" binding:"required"`
+	}
+	var p params
+	if err := c.ShouldBindUri(&p); err != nil {
+		util.NewError(c, http.StatusBadRequest, constant.ErrValidationCode, err)
 		return
 	}
 
 	var json UpdateBookReq
 	if err := c.ShouldBindJSON(&json); err != nil {
-		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, err))
+		util.NewError(c, http.StatusBadRequest, constant.ErrValidationCode, err)
 		return
 	}
 
-	err = h.bookService.UpdateBook(domain.Book{
-		ID:     ID,
+	err := h.bookService.UpdateBook(domain.Book{
+		ID:     p.ID,
 		Title:  json.Title,
 		Author: json.Author,
 	})
 	if err != nil {
 		if errors.Is(err, domain.ErrBookNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{
-				"code":    constant.ErrNotFoundCode,
-				"message": "Book not found",
-			})
+			util.NewError(c, http.StatusNotFound, constant.ErrNotFoundCode, domain.ErrBookNotFound)
 			return
 		}
 		c.Error(err)
@@ -137,22 +136,22 @@ func (h *BookHandler) UpdateBook(c *gin.Context) {
 }
 
 func (h *BookHandler) DeleteBook(c *gin.Context) {
-	ID, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, "ID should be a number"))
+	type params struct {
+		ID int `uri:"id" binding:"required"`
+	}
+	var p params
+	if err := c.ShouldBindUri(&p); err != nil {
+		util.NewError(c, http.StatusBadRequest, constant.ErrValidationCode, err)
 		return
 	}
 
-	err = h.bookService.DeleteBook(ID)
+	err := h.bookService.DeleteBook(p.ID)
 	if err != nil {
 		if errors.Is(err, domain.ErrBookNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{
-				"code":    constant.ErrNotFoundCode,
-				"message": "Book not found",
-			})
+			util.NewError(c, http.StatusNotFound, constant.ErrNotFoundCode, domain.ErrBookNotFound)
 			return
 		}
-		c.Error(err)
+		util.NewError(c, http.StatusInternalServerError, constant.ErrInternalServerError, err)
 		return
 	}
 	c.Status(http.StatusNoContent)
