@@ -3,6 +3,7 @@ package middlewares
 import (
 	"errors"
 	"go-api-demo/internal/constant"
+	"go-api-demo/internal/http/util"
 	"log"
 	"net/http"
 
@@ -19,18 +20,21 @@ func ErrorHandler() gin.HandlerFunc {
 		}
 
 		if errors.Is(lastErr.Err, constant.ErrValidation) {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"code":    constant.ErrValidationCode,
-				"message": lastErr.Err.Error(),
-			})
+			util.NewError(
+				c,
+				http.StatusBadRequest,
+				constant.ErrValidationCode,
+				lastErr.Err,
+			)
 			return
 		}
 
 		log.Printf("[INTERNAL_ERROR]: %v\n", lastErr.Err)
-
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":    "INTERNAL_ERROR",
-			"message": "An unexpected error occurred.",
-		})
+		util.NewError(
+			c,
+			http.StatusInternalServerError,
+			constant.ErrInternalServerError,
+			errors.New("an unexpected error occurred"),
+		)
 	}
 }
