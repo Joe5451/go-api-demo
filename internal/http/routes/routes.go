@@ -2,7 +2,7 @@ package routes
 
 import (
 	"go-api-demo/internal/adapter/handlers"
-	"go-api-demo/internal/middlewares"
+	"go-api-demo/internal/http/middlewares"
 
 	"github.com/gin-gonic/gin"
 )

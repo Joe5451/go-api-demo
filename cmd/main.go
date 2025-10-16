@@ -6,8 +6,8 @@ import (
 	"go-api-demo/internal/adapter/repositories"
 	"go-api-demo/internal/application"
 	"go-api-demo/internal/config"
+	"go-api-demo/internal/http/routes"
 	"go-api-demo/internal/infra"
-	"go-api-demo/internal/routes"
 	"log"
 
 	"github.com/gin-gonic/gin"
