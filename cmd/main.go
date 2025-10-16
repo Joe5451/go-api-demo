@@ -11,8 +11,22 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+
+	_ "go-api-demo/docs"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title           API Demo
+// @version         1.0
+// @description     This is a sample server API Demo.
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /
 func main() {
 	config, err := config.LoadConfig()
 	if err != nil {
@@ -35,5 +49,7 @@ func main() {
 		router.Use(gin.Logger())
 	}
 	routes.SetupRoutes(router, bookHandler)
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run(":8080")
 }

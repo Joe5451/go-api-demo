@@ -1,0 +1,12 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server API Demo.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: API Demo
+  version: "1.0"
+paths: {}
+swagger: "2.0"
