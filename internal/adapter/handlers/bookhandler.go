@@ -12,6 +12,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type (
+	CreateBookReq struct {
+		Title  string `json:"title" binding:"required" example:"The Great Gatsby"`
+		Author string `json:"author" binding:"required" example:"John Doe"`
+	}
+	GetBooksReq struct {
+		Page    int `form:"page,default=1" binding:"min=1" example:"1"`
+		PerPage int `form:"per_page,default=10" binding:"min=1,max=100" example:"10"`
+	}
+	UpdateBookReq struct {
+		Title  string `json:"title" binding:"required" example:"The Great Gatsby"`
+		Author string `json:"author" binding:"required" example:"John Doe"`
+	}
+)
+
 type BookHandler struct {
 	bookService in.BookUseCase
 }
@@ -21,11 +36,7 @@ func NewBookHandler(bookService in.BookUseCase) *BookHandler {
 }
 
 func (h *BookHandler) CreateBook(c *gin.Context) {
-	json := struct {
-		Title  string `json:"title" binding:"required"`
-		Author string `json:"author" binding:"required"`
-	}{}
-
+	var json CreateBookReq
 	if err := c.ShouldBindJSON(&json); err != nil {
 		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, err))
 		return
@@ -78,11 +89,7 @@ func (h *BookHandler) GetBook(c *gin.Context) {
 }
 
 func (h *BookHandler) GetBooks(c *gin.Context) {
-	var query struct {
-		Page    int `form:"page,default=1" binding:"min=1"`
-		PerPage int `form:"per_page,default=10" binding:"min=1,max=100"`
-	}
-
+	var query GetBooksReq
 	if err := c.ShouldBindQuery(&query); err != nil {
 		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, err))
 		return
@@ -104,11 +111,7 @@ func (h *BookHandler) UpdateBook(c *gin.Context) {
 		return
 	}
 
-	var json struct {
-		Title  string `json:"title" binding:"required"`
-		Author string `json:"author" binding:"required"`
-	}
-
+	var json UpdateBookReq
 	if err := c.ShouldBindJSON(&json); err != nil {
 		c.Error(fmt.Errorf("%w: %v", constant.ErrValidation, err))
 		return
