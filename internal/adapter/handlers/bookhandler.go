@@ -57,7 +57,7 @@ func (h *BookHandler) CreateBook(c *gin.Context) {
 		Author: json.Author,
 	}
 
-	err := h.bookService.CreateBook(book)
+	err := h.bookService.CreateBook(c.Request.Context(), book)
 	if err != nil {
 		c.Error(err)
 		return
@@ -88,7 +88,7 @@ func (h *BookHandler) GetBook(c *gin.Context) {
 		return
 	}
 
-	book, err := h.bookService.GetBook(p.ID)
+	book, err := h.bookService.GetBook(c.Request.Context(), p.ID)
 	if err != nil {
 		if errors.Is(err, domain.ErrBookNotFound) {
 			util.NewError(c, http.StatusNotFound, constant.ErrNotFoundCode, domain.ErrBookNotFound)
@@ -129,7 +129,7 @@ func (h *BookHandler) GetBooks(c *gin.Context) {
 		return
 	}
 
-	books, err := h.bookService.GetBooks(query.Page, query.PerPage)
+	books, err := h.bookService.GetBooks(c.Request.Context(), query.Page, query.PerPage)
 	if err != nil {
 		c.Error(err)
 		return
@@ -167,7 +167,7 @@ func (h *BookHandler) UpdateBook(c *gin.Context) {
 		return
 	}
 
-	err := h.bookService.UpdateBook(domain.Book{
+	err := h.bookService.UpdateBook(c.Request.Context(), domain.Book{
 		ID:     p.ID,
 		Title:  json.Title,
 		Author: json.Author,
@@ -205,7 +205,7 @@ func (h *BookHandler) DeleteBook(c *gin.Context) {
 		return
 	}
 
-	err := h.bookService.DeleteBook(p.ID)
+	err := h.bookService.DeleteBook(c.Request.Context(), p.ID)
 	if err != nil {
 		if errors.Is(err, domain.ErrBookNotFound) {
 			util.NewError(c, http.StatusNotFound, constant.ErrNotFoundCode, domain.ErrBookNotFound)

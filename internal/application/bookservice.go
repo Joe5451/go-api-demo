@@ -1,6 +1,7 @@
 package application
 
 import (
+	"context"
 	"go-api-demo/internal/application/port/in"
 	"go-api-demo/internal/application/port/out"
 	"go-api-demo/internal/domain"
@@ -16,18 +17,18 @@ func NewBookService(bookRepo out.BookRepository) *BookService {
 	return &BookService{bookRepo: bookRepo}
 }
 
-func (s *BookService) CreateBook(book domain.Book) error {
+func (s *BookService) CreateBook(ctx context.Context, book domain.Book) error {
 	if err := book.Validate(); err != nil {
 		return err
 	}
-	return s.bookRepo.CreateBook(book)
+	return s.bookRepo.CreateBook(ctx, book)
 }
 
-func (s *BookService) GetBook(id int) (domain.Book, error) {
-	return s.bookRepo.GetBook(id)
+func (s *BookService) GetBook(ctx context.Context, id int) (domain.Book, error) {
+	return s.bookRepo.GetBook(ctx, id)
 }
 
-func (s *BookService) GetBooks(page, perPage int) ([]domain.Book, error) {
+func (s *BookService) GetBooks(ctx context.Context, page, perPage int) ([]domain.Book, error) {
 	if page < 1 {
 		page = 1
 	}
@@ -38,16 +39,16 @@ func (s *BookService) GetBooks(page, perPage int) ([]domain.Book, error) {
 	offset := (page - 1) * perPage
 	limit := perPage
 
-	return s.bookRepo.GetBooks(offset, limit)
+	return s.bookRepo.GetBooks(ctx, offset, limit)
 }
 
-func (s *BookService) UpdateBook(book domain.Book) error {
+func (s *BookService) UpdateBook(ctx context.Context, book domain.Book) error {
 	if err := book.Validate(); err != nil {
 		return err
 	}
-	return s.bookRepo.UpdateBook(book)
+	return s.bookRepo.UpdateBook(ctx, book)
 }
 
-func (s *BookService) DeleteBook(id int) error {
-	return s.bookRepo.DeleteBook(id)
+func (s *BookService) DeleteBook(ctx context.Context, id int) error {
+	return s.bookRepo.DeleteBook(ctx, id)
 }

@@ -1,11 +1,14 @@
 package out
 
-import "go-api-demo/internal/domain"
+import (
+	"context"
+	"go-api-demo/internal/domain"
+)
 
 type BookRepository interface {
-	CreateBook(book domain.Book) error
-	GetBook(id int) (domain.Book, error)
-	GetBooks(offset, limit int) ([]domain.Book, error)
-	UpdateBook(book domain.Book) error
-	DeleteBook(id int) error
+	CreateBook(ctx context.Context, book domain.Book) error
+	GetBook(ctx context.Context, id int) (domain.Book, error)
+	GetBooks(ctx context.Context, offset, limit int) ([]domain.Book, error)
+	UpdateBook(ctx context.Context, book domain.Book) error
+	DeleteBook(ctx context.Context, id int) error
 }
