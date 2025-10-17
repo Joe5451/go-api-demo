@@ -1,4 +1,58 @@
 basePath: /
+definitions:
+  constant.ErrorCode:
+    enum:
+    - VALIDATION_ERROR
+    - NOT_FOUND
+    - INTERNAL_SERVER_ERROR
+    type: string
+    x-enum-varnames:
+    - ErrValidationCode
+    - ErrNotFoundCode
+    - ErrInternalServerError
+  domain.Book:
+    properties:
+      author:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  handlers.CreateBookReq:
+    properties:
+      author:
+        example: John Doe
+        type: string
+      title:
+        example: The Great Gatsby
+        type: string
+    required:
+    - author
+    - title
+    type: object
+  handlers.UpdateBookReq:
+    properties:
+      author:
+        example: John Doe
+        type: string
+      title:
+        example: The Great Gatsby
+        type: string
+    required:
+    - author
+    - title
+    type: object
+  util.HTTPError:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/constant.ErrorCode'
+        example: ERROR_CODE
+      message:
+        example: Error message
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -8,5 +62,165 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: API Demo
   version: "1.0"
-paths: {}
+paths:
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: Get books
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Per Page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Book'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Get books
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: Create a book
+      parameters:
+      - description: Create book
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateBookReq'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Create a book
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a book
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Delete a book
+      tags:
+      - books
+    get:
+      consumes:
+      - application/json
+      description: Get a book
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Book'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Get a book
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Update a book
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update book
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.UpdateBookReq'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Update a book
+      tags:
+      - books
 swagger: "2.0"

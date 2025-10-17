@@ -34,6 +34,17 @@ func NewBookHandler(bookService in.BookUseCase) *BookHandler {
 	return &BookHandler{bookService: bookService}
 }
 
+// CreateBook godoc
+// @Summary      Create a book
+// @Description  Create a book
+// @Tags         books
+// @Accept       json
+// @Produce      json
+// @Param        request  body		CreateBookReq	true "Create book"
+// @Success      204  {object}	nil
+// @Failure      400  {object}  util.HTTPError
+// @Failure      500  {object}  util.HTTPError
+// @Router       /books [post]
 func (h *BookHandler) CreateBook(c *gin.Context) {
 	var json CreateBookReq
 	if err := c.ShouldBindJSON(&json); err != nil {
@@ -55,6 +66,18 @@ func (h *BookHandler) CreateBook(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
+// GetBook godoc
+// @Summary      Get a book
+// @Description  Get a book
+// @Tags         books
+// @Accept       json
+// @Produce      json
+// @Param        id  path  int  true  "Book ID"
+// @Success      200  {object}  domain.Book
+// @Failure      400  {object}  util.HTTPError
+// @Failure      404  {object}  util.HTTPError
+// @Failure      500  {object}  util.HTTPError
+// @Router       /books/{id} [get]
 func (h *BookHandler) GetBook(c *gin.Context) {
 	type params struct {
 		ID int `uri:"id" binding:"required"`
@@ -87,6 +110,18 @@ func (h *BookHandler) GetBook(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 
+// GetBooks godoc
+// @Summary      Get books
+// @Description  Get books
+// @Tags         books
+// @Accept       json
+// @Produce      json
+// @Param        page  query  int  false  "Page"
+// @Param        per_page  query  int  false  "Per Page"
+// @Success      200  {object}  []domain.Book
+// @Failure      400  {object}  util.HTTPError
+// @Failure      500  {object}  util.HTTPError
+// @Router       /books [get]
 func (h *BookHandler) GetBooks(c *gin.Context) {
 	var query GetBooksReq
 	if err := c.ShouldBindQuery(&query); err != nil {
@@ -103,6 +138,19 @@ func (h *BookHandler) GetBooks(c *gin.Context) {
 	c.JSON(http.StatusOK, books)
 }
 
+// UpdateBook godoc
+// @Summary      Update a book
+// @Description  Update a book
+// @Tags         books
+// @Accept       json
+// @Produce      json
+// @Param        id  path  int  true  "Book ID"
+// @Param        request  body  UpdateBookReq  true  "Update book"
+// @Success      204  {object}  nil
+// @Failure      400  {object}  util.HTTPError
+// @Failure      404  {object}  util.HTTPError
+// @Failure      500  {object}  util.HTTPError
+// @Router       /books/{id} [put]
 func (h *BookHandler) UpdateBook(c *gin.Context) {
 	type params struct {
 		ID int `uri:"id" binding:"required"`
@@ -135,6 +183,18 @@ func (h *BookHandler) UpdateBook(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
+// DeleteBook godoc
+// @Summary      Delete a book
+// @Description  Delete a book
+// @Tags         books
+// @Accept       json
+// @Produce      json
+// @Param        id  path  int  true  "Book ID"
+// @Success      204  {object}  nil
+// @Failure      400  {object}  util.HTTPError
+// @Failure      404  {object}  util.HTTPError
+// @Failure      500  {object}  util.HTTPError
+// @Router       /books/{id} [delete]
 func (h *BookHandler) DeleteBook(c *gin.Context) {
 	type params struct {
 		ID int `uri:"id" binding:"required"`
