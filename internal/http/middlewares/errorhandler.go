@@ -19,16 +19,6 @@ func ErrorHandler() gin.HandlerFunc {
 			return
 		}
 
-		if errors.Is(lastErr.Err, constant.ErrValidation) {
-			util.NewError(
-				c,
-				http.StatusBadRequest,
-				constant.ErrValidationCode,
-				lastErr.Err,
-			)
-			return
-		}
-
 		log.Printf("[INTERNAL_ERROR]: %v\n", lastErr.Err)
 		util.NewError(
 			c,
