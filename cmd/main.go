@@ -2,15 +2,9 @@ package main
 
 import (
 	"context"
-	"go-api-demo/internal/adapter/handlers"
-	"go-api-demo/internal/adapter/repositories"
-	"go-api-demo/internal/application"
+	"go-api-demo/internal/bootstrap"
 	"go-api-demo/internal/config"
-	"go-api-demo/internal/http/routes"
-	"go-api-demo/internal/infra"
 	"log"
-
-	"github.com/gin-gonic/gin"
 
 	_ "go-api-demo/docs"
 
@@ -28,28 +22,17 @@ import (
 // @host      localhost:8080
 // @BasePath  /
 func main() {
-	config, err := config.LoadConfig()
+	cfg, err := config.LoadConfig()
 	if err != nil {
 		log.Fatalf("failed to load config: %v", err)
 	}
 
-	db, err := infra.NewPostgresPool(context.Background(), config.Database.Postgres, config.Debug)
+	app, err := bootstrap.NewApp(context.Background(), cfg)
 	if err != nil {
-		log.Fatalf("failed to create postgres pool: %v", err)
+		log.Fatalf("failed to create app: %v", err)
 	}
-	defer db.Close()
+	defer app.Close()
 
-	bookRepo := repositories.NewPostgresBookRepo(db)
-	bookService := application.NewBookService(bookRepo)
-	bookHandler := handlers.NewBookHandler(bookService)
-
-	router := gin.New()
-	router.Use(gin.Recovery())
-	if config.Debug {
-		router.Use(gin.Logger())
-	}
-	routes.SetupRoutes(router, bookHandler)
-
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	router.Run(":8080")
+	app.Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	app.Router.Run(":8080")
 }
