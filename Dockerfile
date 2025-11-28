@@ -14,7 +14,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o /app/bin/main ./cmd/main.go
 
 # Runtime stage
-FROM alpine:latest
+FROM alpine:3.22
 
 RUN apk --no-cache add ca-certificates
 
@@ -25,4 +25,3 @@ COPY --from=builder /app/bin/main .
 EXPOSE 8080
 
 CMD ["./main"]
-
