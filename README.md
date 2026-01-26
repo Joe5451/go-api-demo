@@ -1,8 +1,21 @@
-# Go API Demo
+# Go API Boilerplate
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/Joe5451/go-api-demo)](https://goreportcard.com/report/github.com/Joe5451/go-api-demo)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Joe5451/go-api-boilerplate)](https://goreportcard.com/report/github.com/Joe5451/go-api-boilerplate)
 
-A simple CRUD API demo built with **Go** and the **Gin** web framework, using **PostgreSQL** for persistence and **Swagger** (swaggo) for API documentation.
+A foundational **Go API project layout** built with **Gin** web framework, **PostgreSQL**, and **Swagger** documentation. This boilerplate provides a well-structured Clean Architecture foundation to help you start new Go projects without having to rethink the project directory structure from scratch.
+
+## Purpose
+
+This project serves as a **reference implementation** and **starting point** for Go API development. It demonstrates:
+
+- Clean Architecture with clear separation of concerns
+- Complete testing setup (unit tests + feature tests)
+- Docker configuration for local development
+- API documentation with Swagger
+- Configuration management
+- Error handling patterns
+
+Use this boilerplate as a foundation when starting new Go projects, so you don't have to recreate the project structure and setup from scratch each time.
 
 ## Prerequisites
 
