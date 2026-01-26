@@ -1,7 +1,7 @@
 package util
 
 import (
-	"go-api-demo/internal/constant"
+	"go-api-boilerplate/internal/constant"
 
 	"github.com/gin-gonic/gin"
 )

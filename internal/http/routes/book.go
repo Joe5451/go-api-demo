@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"go-api-demo/internal/adapter/handlers"
+	"go-api-boilerplate/internal/adapter/handlers"
 
 	"github.com/gin-gonic/gin"
 )

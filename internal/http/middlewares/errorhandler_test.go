@@ -3,8 +3,8 @@ package middlewares
 import (
 	"encoding/json"
 	"errors"
-	"go-api-demo/internal/constant"
-	"go-api-demo/internal/http/util"
+	"go-api-boilerplate/internal/constant"
+	"go-api-boilerplate/internal/http/util"
 	"net/http"
 	"net/http/httptest"
 	"testing"

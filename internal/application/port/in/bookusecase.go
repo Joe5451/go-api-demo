@@ -2,7 +2,7 @@ package in
 
 import (
 	"context"
-	"go-api-demo/internal/domain"
+	"go-api-boilerplate/internal/domain"
 )
 
 type BookUseCase interface {

@@ -2,8 +2,8 @@ package repositories
 
 import (
 	"context"
-	"go-api-demo/internal/application/port/out"
-	"go-api-demo/internal/domain"
+	"go-api-boilerplate/internal/application/port/out"
+	"go-api-boilerplate/internal/domain"
 
 	pgx "github.com/jackc/pgx/v5"
 	pgconn "github.com/jackc/pgx/v5/pgconn"

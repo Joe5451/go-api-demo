@@ -3,8 +3,8 @@ package helpers
 import (
 	"context"
 	"fmt"
-	"go-api-demo/internal/bootstrap"
-	"go-api-demo/internal/config"
+	"go-api-boilerplate/internal/bootstrap"
+	"go-api-boilerplate/internal/config"
 	"path/filepath"
 	"runtime"
 	"sync"

@@ -2,9 +2,9 @@ package application
 
 import (
 	"context"
-	"go-api-demo/internal/application/port/in"
-	"go-api-demo/internal/application/port/out"
-	"go-api-demo/internal/domain"
+	"go-api-boilerplate/internal/application/port/in"
+	"go-api-boilerplate/internal/application/port/out"
+	"go-api-boilerplate/internal/domain"
 )
 
 type BookService struct {

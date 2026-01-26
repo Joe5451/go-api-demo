@@ -11,7 +11,7 @@ package mocks
 
 import (
 	context "context"
-	domain "go-api-demo/internal/domain"
+	domain "go-api-boilerplate/internal/domain"
 	reflect "reflect"
 
 	gomock "go.uber.org/mock/gomock"

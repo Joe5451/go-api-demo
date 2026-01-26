@@ -1,4 +1,4 @@
-module go-api-demo
+module go-api-boilerplate
 
 go 1.25.1
 

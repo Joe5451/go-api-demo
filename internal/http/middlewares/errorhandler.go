@@ -2,8 +2,8 @@ package middlewares
 
 import (
 	"errors"
-	"go-api-demo/internal/constant"
-	"go-api-demo/internal/http/util"
+	"go-api-boilerplate/internal/constant"
+	"go-api-boilerplate/internal/http/util"
 	"log"
 	"net/http"
 

@@ -2,12 +2,12 @@ package bootstrap
 
 import (
 	"context"
-	"go-api-demo/internal/adapter/handlers"
-	"go-api-demo/internal/adapter/repositories"
-	"go-api-demo/internal/application"
-	"go-api-demo/internal/config"
-	"go-api-demo/internal/http/routes"
-	"go-api-demo/internal/infra"
+	"go-api-boilerplate/internal/adapter/handlers"
+	"go-api-boilerplate/internal/adapter/repositories"
+	"go-api-boilerplate/internal/application"
+	"go-api-boilerplate/internal/config"
+	"go-api-boilerplate/internal/http/routes"
+	"go-api-boilerplate/internal/infra"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"

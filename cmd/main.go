@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"go-api-demo/internal/bootstrap"
-	"go-api-demo/internal/config"
+	"go-api-boilerplate/internal/bootstrap"
+	"go-api-boilerplate/internal/config"
 	"log"
 
-	_ "go-api-demo/docs"
+	_ "go-api-boilerplate/docs"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"

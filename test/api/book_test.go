@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"go-api-demo/test/helpers"
+	"go-api-boilerplate/test/helpers"
 	"net/http"
 	"net/http/httptest"
 	"os"

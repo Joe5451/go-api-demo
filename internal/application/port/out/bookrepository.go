@@ -2,7 +2,7 @@ package out
 
 import (
 	"context"
-	"go-api-demo/internal/domain"
+	"go-api-boilerplate/internal/domain"
 )
 
 type BookRepository interface {

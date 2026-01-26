@@ -3,7 +3,7 @@ package util
 import (
 	"encoding/json"
 	"errors"
-	"go-api-demo/internal/constant"
+	"go-api-boilerplate/internal/constant"
 	"net/http"
 	"net/http/httptest"
 	"testing"

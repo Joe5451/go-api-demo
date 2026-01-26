@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"errors"
-	"go-api-demo/internal/application/port/in"
-	"go-api-demo/internal/constant"
-	"go-api-demo/internal/domain"
-	"go-api-demo/internal/http/util"
+	"go-api-boilerplate/internal/application/port/in"
+	"go-api-boilerplate/internal/constant"
+	"go-api-boilerplate/internal/domain"
+	"go-api-boilerplate/internal/http/util"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

@@ -3,8 +3,8 @@ package application
 import (
 	"context"
 	"errors"
-	"go-api-demo/internal/domain"
-	"go-api-demo/mocks"
+	"go-api-boilerplate/internal/domain"
+	"go-api-boilerplate/mocks"
 	"reflect"
 	"testing"
 

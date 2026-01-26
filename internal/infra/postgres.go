@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"go-api-demo/internal/config"
+	"go-api-boilerplate/internal/config"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/jackc/pgx/v5/tracelog"
